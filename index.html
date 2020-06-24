@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <button onclick="setWaveType('square')">Square</button>
+    <button onclick="setWaveType('sine')">Sine</button>
+    <button onclick="setWaveType('sawtooth')">Sawtooth</button>
+    <button onclick="start()">Start</button>
+    <input type="range" width="500px" min="0" max="2000" value="0" onchange="setFrequency()">
+</head>
+<body>
+<script>
+    document.addEventListener("keydown", press);
+    document.addEventListener("keyup", stop);
+
+    var context = new AudioContext();
+
+    var o = context.createOscillator();
+    var o2 = context.createOscillator();
+
+    o.type = 'sine';
+    o2.type = 'sine';
+
+    o.frequency.setValueAtTime(300, context.currentTime);
+    o2.frequency.setValueAtTime(900, context.currentTime);
+
+    function press () {
+        if (event.key == 'b') {
+            o.frequency.setValueAtTime(247.5, context.currentTime);
+            o2.frequency.setValueAtTime(990, context.currentTime);
+
+            return;
+        }
+
+        if (event.key == 'c') {
+            o.frequency.setValueAtTime(264, context.currentTime);
+            o2.frequency.setValueAtTime(528, context.currentTime);
+return;
+        }
+
+        if (event.key == 'd') {
+            o.frequency.setValueAtTime(297, context.currentTime);
+            o2.frequency.setValueAtTime(594, context.currentTime);
+            return;
+        }
+
+        if (event.key == 'e') {
+            o.frequency.setValueAtTime(330, context.currentTime);
+            o2.frequency.setValueAtTime(594, context.currentTime);
+            return;
+        }
+
+        if (event.key == 'a') {
+            o.frequency.setValueAtTime(440, context.currentTime);
+            o2.frequency.setValueAtTime(880, context.currentTime);
+            return
+        }
+
+        if (event.key == 'h') {
+            o.frequency.setValueAtTime(495, context.currentTime);
+            o2.frequency.setValueAtTime(880, context.currentTime);
+        }
+    }
+
+    function start () {
+        o.connect(context.destination);
+        o.start();
+    }
+
+    function setFrequency () {
+        o2.frequency.setValueAtTime(event.target.value, context.currentTime);
+        console.log(event.target.value);
+    }
+
+    function stop() {
+        o.frequency.setValueAtTime(0, context.currentTime);
+        o2.frequency.setValueAtTime(0, context.currentTime);
+    }
+
+    function setWaveType (type) {
+        o.type = type;
+        o2.type = type;
+    }
+
+</script>
+</body>
+</html>
